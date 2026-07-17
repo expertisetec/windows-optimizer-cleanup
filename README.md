@@ -1,9 +1,9 @@
-# Optimize-WindowsServer
+# WindowsOptimizerCleanup
 
 **Expertise Tecnologia** — Script de limpeza e otimização de Windows Server com boas práticas Microsoft.
 
 - **Autor:** Pablo Fernando Schutz
-- **Versão:** 1.0.0
+- **Versão:** 1.0.1
 
 ## O que o script faz (em ordem)
 
@@ -29,13 +29,13 @@ Todos os passos rodam com aprovação automática (sem prompts), geram log em `C
 Localmente:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\Optimize-WindowsServer.ps1
+powershell -ExecutionPolicy Bypass -File .\WindowsOptimizerCleanup.ps1
 ```
 
 Direto do GitHub (uma linha, para o time de TI):
 
 ```powershell
-irm https://raw.githubusercontent.com/expertisetec/optimize-windows-server/main/Optimize-WindowsServer.ps1 | iex
+irm https://raw.githubusercontent.com/expertisetec/windows-optimizer-cleanup/main/WindowsOptimizerCleanup.ps1 | iex
 ```
 
 

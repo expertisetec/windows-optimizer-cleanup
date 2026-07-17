@@ -2,20 +2,23 @@
 ===============================================================================
   EXPERTISE TECNOLOGIA
 ===============================================================================
-  Script  : Optimize-WindowsServer.ps1
+  Script  : WindowsOptimizerCleanup.ps1
   Descricao : Limpeza e otimizacao de Windows Server com aplicacao de
               boas praticas Microsoft (temporarios, Lixeira, cache do
               Windows Update, SFC e DISM), com log e relatorio de espaco.
   Autor   : Pablo Fernando Schutz
   Empresa : Expertise Tecnologia
-  Versao  : 1.0.0
-  Data    : 16/07/2026
+  Versao  : 1.0.1
+  Data    : 17/07/2026
   Requisitos: Windows Server 2016 ou superior | PowerShell 5.1+
               Executar como Administrador
-  Uso     : powershell -ExecutionPolicy Bypass -File .\Optimize-WindowsServer.ps1
+  Uso     : powershell -ExecutionPolicy Bypass -File .\WindowsOptimizerCleanup.ps1
 ===============================================================================
   HISTORICO DE VERSOES
   1.0.0 - 16/07/2026 - Pablo F. Schutz - Versao inicial
+  1.0.1 - 17/07/2026 - Pablo F. Schutz - Renomeado de Optimize-WindowsServer.ps1
+                        para WindowsOptimizerCleanup.ps1 (padronizacao de
+                        nomenclatura da serie de scripts de TI)
 ===============================================================================
 #>
 
@@ -25,9 +28,9 @@
 # CONFIGURACAO INICIAL E LOG
 # -----------------------------------------------------------------------------
 $ErrorActionPreference = 'Continue'
-$ScriptVersion = '1.0.0'
+$ScriptVersion = '1.0.1'
 $LogDir  = 'C:\Expertise\Logs'
-$LogFile = Join-Path $LogDir ("Optimize-WindowsServer_{0}.log" -f (Get-Date -Format 'yyyyMMdd_HHmmss'))
+$LogFile = Join-Path $LogDir ("WindowsOptimizerCleanup_{0}.log" -f (Get-Date -Format 'yyyyMMdd_HHmmss'))
 
 if (-not (Test-Path $LogDir)) { New-Item -Path $LogDir -ItemType Directory -Force | Out-Null }
 
