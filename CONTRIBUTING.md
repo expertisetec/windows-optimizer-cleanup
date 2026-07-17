@@ -63,3 +63,19 @@ Não documente histórico de versões dentro do próprio `.ps1`. O bloco
 repositório, e é lá que cada entrada de versão é detalhada (Adicionado /
 Alterado / Corrigido / Removido), seguindo
 [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
+
+## Social preview (GitHub)
+
+Depois de incrementar `$ScriptVersion`, rode:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\Update-SocialPreview.ps1
+```
+
+Isso atualiza a versão exibida em `assets/social-preview-source.html` e
+re-renderiza `assets/social-preview.png` (1280×640, requer Chrome ou Edge
+instalado). Faça commit do PNG junto com a mudança de versão.
+
+O GitHub **não** tem API para o campo Social Preview — mesmo com o PNG do
+repositório atualizado, o passo final continua manual: Settings → General →
+Social preview → Edit → Upload an image.
