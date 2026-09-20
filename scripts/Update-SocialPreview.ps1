@@ -9,9 +9,9 @@
   - Atualiza os dois lugares que mostram a versao em
     assets/social-preview-source.html (badge "vX.Y.Z" e a linha
     "Versao: X.Y.Z" do mockup de terminal).
-  - Renderiza o HTML via Chrome/Edge headless em 2x e reduz para
-    1280x640 (tamanho recomendado pelo GitHub para Social Preview),
-    sobrescrevendo assets/social-preview.png.
+  - Renderiza o HTML via Chrome/Edge headless em 2x, recorta o topo
+    e reduz para 1280x640 (tamanho recomendado pelo GitHub para Social
+    Preview), sobrescrevendo assets/social-preview.png.
 
   Uso:
     powershell -ExecutionPolicy Bypass -File .\scripts\Update-SocialPreview.ps1
@@ -58,9 +58,13 @@ Write-Host "Usando navegador: $browser"
 $tmpPng = Join-Path ([System.IO.Path]::GetTempPath()) ("social-preview-{0}.png" -f ([guid]::NewGuid()))
 $fileUri = "file:///" + ($HtmlPath -replace '\\', '/')
 
+# No modo headless atual do Chrome/Edge, --window-size inclui a moldura do
+# navegador: pedir 640 de altura entrega ~545 de area visivel e o rodape do
+# preview sai cortado. Por isso a janela e' mais alta e so o topo 1280x640
+# (2560x1280 em 2x) e' aproveitado abaixo.
 $chromeArgs = @(
     '--headless', '--disable-gpu', '--hide-scrollbars',
-    '--force-device-scale-factor=2', '--window-size=1280,640',
+    '--force-device-scale-factor=2', '--window-size=1280,840',
     "--screenshot=$tmpPng", $fileUri
 )
 Start-Process -FilePath $browser -ArgumentList $chromeArgs -Wait -NoNewWindow
@@ -82,7 +86,7 @@ $g = [System.Drawing.Graphics]::FromImage($dst)
 $g.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
 $g.SmoothingMode     = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
 $g.PixelOffsetMode   = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
-$g.DrawImage($src, 0, 0, 1280, 640)
+$g.DrawImage($src, (New-Object System.Drawing.Rectangle(0, 0, 1280, 640)), 0, 0, 2560, 1280, [System.Drawing.GraphicsUnit]::Pixel)
 $g.Dispose()
 $dst.Save($PngPath, [System.Drawing.Imaging.ImageFormat]::Png)
 $dst.Dispose()

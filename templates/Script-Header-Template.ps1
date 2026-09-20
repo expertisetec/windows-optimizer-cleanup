@@ -27,6 +27,19 @@
 #Requires -RunAsAdministrator
 
 # -----------------------------------------------------------------------------
+# VERIFICACAO DE ELEVACAO
+# O "#Requires -RunAsAdministrator" so e' aplicado quando o script roda como
+# arquivo; via "irm | iex" ele e' apenas um comentario. Por isso a checagem
+# explicita, antes de qualquer alteracao no sistema. Remova este bloco e o
+# "#Requires" se o script nao precisar de privilegio.
+# -----------------------------------------------------------------------------
+$identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+if (-not ([Security.Principal.WindowsPrincipal]$identity).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host 'ERRO: este script precisa ser executado como Administrador.' -ForegroundColor Red
+    if ($PSCommandPath) { exit 1 } else { return }
+}
+
+# -----------------------------------------------------------------------------
 # CONFIGURACAO INICIAL E LOG
 # -----------------------------------------------------------------------------
 $ErrorActionPreference = 'Continue'
